@@ -51,5 +51,11 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "eyeTrackingGame.sln"
+    "dotnet.defaultSolution": "eyeTrackingGame.sln",
+    "cSpell.words": [
+        "Behaviour",
+        "Mathf",
+        "Raycast",
+        "Rigidbody"
+    ]
 }
