@@ -12,6 +12,7 @@
 
 # Tobii Eyetracking SDK
 /[Aa]ssets/Samples/
+/[Pp]ackages/TobiiUnitySDK_5.0.0.3/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
