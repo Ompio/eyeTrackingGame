@@ -1,0 +1,1 @@
+Aby projekt działał w unity trzeba do niego dodać TobiiUnitySDK_5.0.0.3 do folderu Packages

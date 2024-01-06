@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform orientation;
     float horizontalInput;
     float verticalInput;
+    private bool mounted;
 
     Vector3 moveDirection;
 
@@ -40,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundCheckLayer);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 1.2f, groundCheckLayer);
 
         MyInput();
         SpeedControl();
@@ -82,12 +83,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 flatVel = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
 
         // limit velocity if needed
-        if(flatVel.magnitude > moveSpeed)
+        if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rigidBody.velocity = new Vector3(limitedVel.x, rigidBody.velocity.y, limitedVel.z);
         }
-        
+
     }
     private void Jump()
     {
@@ -99,5 +100,18 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+    public void MountPlayer(Transform mountPosition)
+    {
+        transform.position = mountPosition.position;
+        mounted = true;
+    }
+    public void DeMount()
+    {
+        if (mounted)
+        {
+            Jump();
+            mounted = false;
+        }
     }
 }

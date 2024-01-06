@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tobii.Gaming;
 
-[RequireComponent(typeof(GazeAware))]
+[RequireComponent(typeof(GazeAware), typeof(Rigidbody))]
 public class MoveWhenNotLookedAt : MonoBehaviour
 {
     public Transform playerTransform;
     private GazeAware _gazeAware;
-    public float speed = 2;
+    private Rigidbody _rigidbody;
+    public float forceAmount = 10;
+    public float maxVelocity = 5;  // Maksymalna prędkość, którą może osiągnąć obiekt
     private float stopTime = 0;
     private float countdownTimer = 0;
 
@@ -17,6 +19,9 @@ public class MoveWhenNotLookedAt : MonoBehaviour
     void Start()
     {
         _gazeAware = GetComponent<GazeAware>();
+        _rigidbody = GetComponent<Rigidbody>();
+        stopTime = Random.Range(2f, 5f); // Ustaw losowy czas zatrzymania od 2 do 5 sekund
+        countdownTimer = stopTime;
     }
 
     void Update()
@@ -25,6 +30,7 @@ public class MoveWhenNotLookedAt : MonoBehaviour
         if (_gazeAware.HasGazeFocus)
         {
             isMoving = false;
+            _rigidbody.velocity = Vector3.zero; // Zatrzymuje ruch obiektu
             stopTime = Random.Range(2f, 5f); // Ustaw losowy czas zatrzymania od 2 do 5 sekund
             countdownTimer = stopTime;
         }
@@ -42,8 +48,14 @@ public class MoveWhenNotLookedAt : MonoBehaviour
         // Poruszanie się obiektu
         if (isMoving)
         {
-            Vector3 destination = playerTransform.position;
-            transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+            Vector3 direction = (playerTransform.position - transform.position).normalized;
+            _rigidbody.AddForce(direction * forceAmount, ForceMode.Force);
+
+            // Ograniczenie prędkości
+            if (_rigidbody.velocity.magnitude > maxVelocity)
+            {
+                _rigidbody.velocity = _rigidbody.velocity.normalized * maxVelocity;
+            }
         }
     }
 }

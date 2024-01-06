@@ -6,23 +6,41 @@ using Tobii.Gaming;
 [RequireComponent(typeof(GazeAware))]
 public class ShowSymbolOnGaze : MonoBehaviour
 {
-    private Material material;
     private GazeAware _gazeAware;
+    private List<Material> materialsWithSymbol;
+
     void Start()
     {
         _gazeAware = GetComponent<GazeAware>();
-        material = GetComponent<MeshRenderer>().material;
+        materialsWithSymbol = new List<Material>();
+
+        AddMaterialIfHasSymbol(GetComponent<MeshRenderer>());
+
+        foreach (MeshRenderer renderer in GetComponentsInChildren<MeshRenderer>())
+        {
+            AddMaterialIfHasSymbol(renderer);
+        }
     }
 
     void Update()
     {
-        if (_gazeAware.HasGazeFocus)
+        float visibility = _gazeAware.HasGazeFocus ? 1.0f : 0.0f;
+        SetSymbolVisibility(visibility);
+    }
+
+    private void AddMaterialIfHasSymbol(MeshRenderer renderer)
+    {
+        if (renderer != null && renderer.material.HasProperty("_ShowSymbol"))
         {
-            material.SetFloat("_ShowSymbol", 1);
+            materialsWithSymbol.Add(renderer.material);
         }
-        else
+    }
+
+    private void SetSymbolVisibility(float visibility)
+    {
+        foreach (Material material in materialsWithSymbol)
         {
-            material.SetFloat("_ShowSymbol", 0);
+            material.SetFloat("_ShowSymbol", visibility);
         }
     }
 }
