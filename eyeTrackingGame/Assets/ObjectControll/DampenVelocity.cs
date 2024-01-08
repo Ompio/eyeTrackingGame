@@ -21,7 +21,7 @@ public class DampenVelocity : MonoBehaviour
     {
         if (_rigidbody != null)
         {
-            _rigidbody.velocity *= dampingFactor;
+            Vector3.Lerp( _rigidbody.velocity, new Vector3(0,0,0) , dampingFactor * Time.deltaTime);
         }
     }
 }

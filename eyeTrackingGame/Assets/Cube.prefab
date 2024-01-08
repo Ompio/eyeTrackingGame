@@ -145,10 +145,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2d2de7d212d55408a3579f5f205d55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dimensionSettings:
-  - dimension: -1
-    speed: 10
+  xSettings:
+    speed: 8
     targetScale: 3
-    isScaling: 0
+  ySettings:
+    speed: 8
+    targetScale: 3
+  zSettings:
+    speed: 8
+    targetScale: 3
   speedOfReturn: 10
   returnDelay: 5

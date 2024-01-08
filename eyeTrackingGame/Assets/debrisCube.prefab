@@ -173,4 +173,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73db9e93971ed146b5b9242f58e9052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dampingFactor: 0.6
+  dampingFactor: 0.8
