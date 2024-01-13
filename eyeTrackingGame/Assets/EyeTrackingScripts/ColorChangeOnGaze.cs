@@ -4,34 +4,43 @@ using UnityEngine;
 using Tobii.Gaming;
 
 [RequireComponent(typeof(GazeAware))]
-public class ColorChangeOnGaze : MonoBehaviour
-{   
-    private Renderer _renderer;
+public class ColorChangeOnGazeChildren : MonoBehaviour
+{
     private GazeAware _gazeAware;
-    private Color originalColor; // Variable to store the original color
-    public Color colorOnGaze = Color.yellow; // Public variable for the color when gazed at
+    private Color originalColor;
+    public Color colorOnGaze = Color.yellow;
 
-    // Start is called before the first frame update
+    private Renderer[] _childRenderers;
+    private Color[] _originalColors;
+
     void Start()
     {
         _gazeAware = GetComponent<GazeAware>();
-        _renderer = GetComponent<Renderer>();
+        _childRenderers = GetComponentsInChildren<Renderer>();
 
-        // Capture the original color from the material
-        originalColor = _renderer.material.color;
+        // Store the original colors
+        _originalColors = new Color[_childRenderers.Length];
+        for (int i = 0; i < _childRenderers.Length; i++)
+        {
+            _originalColors[i] = _childRenderers[i].material.color;
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_gazeAware.HasGazeFocus)
-        {   
-            _renderer.material.color = colorOnGaze;
+        {
+            foreach (var renderer in _childRenderers)
+            {
+                renderer.material.color = colorOnGaze;
+            }
         }
         else
         {
-            // Revert to the original color
-            _renderer.material.color = originalColor;
+            for (int i = 0; i < _childRenderers.Length; i++)
+            {
+                _childRenderers[i].material.color = _originalColors[i];
+            }
         }
     }
 }

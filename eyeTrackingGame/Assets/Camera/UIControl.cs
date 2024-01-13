@@ -1,0 +1,74 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class UIControl : MonoBehaviour
+{
+    public static bool isPaused = false;
+    public static bool congratulations = false;
+    public GameObject pauseMenuUI;
+    public GameObject endMenuUI;
+
+    // Update is called once per frame
+    void Start()
+    {
+        Resume();
+        endMenuUI.SetActive(false);
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+    }
+
+    public void Resume()
+    {
+        endMenuUI.SetActive(false);
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void EndScreen()
+    {
+        Debug.Log("koniec gry");
+        endMenuUI.SetActive(true);
+        Time.timeScale = 0.05f;
+        isPaused = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+    
+    void Pause()
+    {
+        pauseMenuUI.SetActive(true);
+        Time.timeScale = 0.05f;
+        isPaused = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+    
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+}
