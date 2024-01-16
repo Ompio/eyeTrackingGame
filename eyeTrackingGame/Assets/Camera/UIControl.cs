@@ -10,6 +10,7 @@ public class UIControl : MonoBehaviour
     public static bool congratulations = false;
     public GameObject pauseMenuUI;
     public GameObject endMenuUI;
+    public GameObject debugUI;
 
     // Update is called once per frame
     void Start()
@@ -21,6 +22,7 @@ public class UIControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            debugUI.SetActive(false);
             if (isPaused)
             {
                 Resume();
@@ -44,6 +46,7 @@ public class UIControl : MonoBehaviour
 
     public void EndScreen()
     {
+        debugUI.SetActive(false);
         Debug.Log("koniec gry");
         endMenuUI.SetActive(true);
         Time.timeScale = 0.05f;
@@ -51,7 +54,7 @@ public class UIControl : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
     }
-    
+
     void Pause()
     {
         pauseMenuUI.SetActive(true);
@@ -60,12 +63,12 @@ public class UIControl : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
     }
-    
+
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    
+
     public void QuitGame()
     {
         Application.Quit();
