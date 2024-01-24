@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class UIControl : MonoBehaviour
 {
+    private static UIControl _instance;
+    public static UIControl Instance { get { return _instance; } }
+
     public static bool isPaused = false;
     public static bool congratulations = false;
     public GameObject pauseMenuUI;
@@ -13,11 +16,23 @@ public class UIControl : MonoBehaviour
     public GameObject debugUI;
 
     // Update is called once per frame
-    void Start()
+    void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        _instance = this;
         Resume();
         endMenuUI.SetActive(false);
+        // Dodatkowe operacje inicjalizacyjne, jeśli są potrzebne
     }
+    // void Start()
+    // {
+        
+    // }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
