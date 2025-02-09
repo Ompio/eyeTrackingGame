@@ -42,8 +42,6 @@ Select the downloaded .unitypackage file and click Import.
 
 Open Edit → Project Settings → Player.
 
-Under Scripting Backend, set it to IL2CPP (if required).
-
 Ensure that Tobii SDK for Desktop is properly integrated.
 
 Add a Tobii Initializer object to your scene:
