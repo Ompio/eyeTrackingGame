@@ -24,7 +24,7 @@ public class MoveWhenNotLookedAt : MonoBehaviour
         countdownTimer = stopTime;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Sprawdź, czy spojrzenie jest skierowane na obiekt
         if (_gazeAware.HasGazeFocus)
